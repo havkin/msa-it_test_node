@@ -5,8 +5,11 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Text = require('../models/text');
 
+
+// проверяем наличие bearer токена
+// при отсутствии или неправильном токене - высылаем на фронт ошибку
 router.use('/', async (req, res, next) => {
-   
+
   if (!req.headers.authorization) {
     return res.json({ error: 'No token' });
   } else {
@@ -39,14 +42,5 @@ router.get('/:id', async (req, res) => {
   res.json(result);
 });
 
-
-router.post('/', (req, res) => {
-
-   const { username } = req.body;
-    
-   res.json({
-     token: jwt.sign(username, 'secretKey'),
-   });
- });
 
 module.exports = router;
